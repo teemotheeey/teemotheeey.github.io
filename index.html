@@ -28,7 +28,7 @@
     font-family: ui-monospace, "SF Mono", Consolas, monospace;
     text-transform: uppercase;
     letter-spacing: 0.09em;
-    font-size: 0.7rem;
+    font-size: 1rem;
   }
 
   .mascot{ color: var(--green); display: block; }
@@ -43,7 +43,7 @@
     padding: 1rem 1.5rem;
     border-bottom: 2px solid var(--ink);
   }
-  header .tag{ max-width: 30ch; }
+  header .tag{ max-width: 26ch; }
   nav{ display: flex; gap: 1.3rem; }
   nav a{ text-decoration: none; }
   nav a:hover{ text-decoration: underline; }
@@ -51,14 +51,14 @@
   /* ---------- hero ---------- */
 
   .hero{
-    padding: 1rem 1.5rem 2.4rem;
+    padding: 2rem 2rem 3.4rem;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
   .hero-mascot{
-    width: clamp(140px, 24vw, 240px);
+    width: clamp(200px, 30vw, 350px);
     margin-bottom: -0.7rem;
   }
 
@@ -67,7 +67,7 @@
     display: flex;
     align-items: flex-end;
     gap: 0.06em;
-    font-size: clamp(2.1rem, 6.5vw, 3.8rem);
+    font-size: clamp(3rem, 9vw, 5.5rem);
     line-height: 0.9;
   }
   .ransom span{
@@ -115,9 +115,9 @@
 
   .hero-sub{
     margin-top: 1.3rem;
-    max-width: 42ch;
+    max-width: 40ch;
     text-align: center;
-    font-size: 0.76rem;
+    font-size: 1.1rem;
     color: #5a615a;
   }
 
@@ -134,7 +134,7 @@
   footer a{ text-decoration: underline; }
 
   @media (max-width: 720px){
-    .hero-mascot{ width: 42vw; }
+    .hero-mascot{ width: 56vw; }
   }
 </style>
 </head>
