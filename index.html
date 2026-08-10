@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Canto Audio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500;1,600;1,700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink: #131313;
@@ -119,6 +122,84 @@
     text-align: center;
     font-size: 1.1rem;
     color: #5a615a;
+  }
+
+  /* ---------- release (loose) ---------- */
+
+  .release{
+    position: relative;
+    max-width: 760px;
+    margin: 1rem auto 5rem;
+    padding: 0 2rem;
+  }
+
+  .rel-eyebrow{
+    display: inline-block;
+    transform: rotate(-3deg);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.25em 0.7em;
+    margin-left: 4%;
+  }
+
+  .rel-name{
+    font-family: "EB Garamond", Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-weight: 600;
+    font-optical-sizing: auto;
+    font-size: clamp(3.2rem, 12vw, 7rem);
+    line-height: 0.86;
+    margin: 0.15em 0 0;
+    transform: rotate(-1.5deg);
+  }
+  .rel-name em{
+    font-style: normal;
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.24em;
+    display: block;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+    transform: rotate(3deg) translateX(12%);
+    margin-top: 0.6em;
+  }
+
+  .rel-blurb{
+    max-width: 34ch;
+    margin: 2.2rem 0 0 auto;
+    text-align: right;
+    font-size: 1rem;
+    color: #3a423a;
+  }
+
+  .rel-foot{
+    display: flex;
+    align-items: baseline;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+    margin-top: 2.4rem;
+    margin-left: 8%;
+  }
+
+  .dl{
+    text-decoration: none;
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.95rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    background: var(--green);
+    color: var(--paper);
+    padding: 0.7rem 1.3rem;
+    display: inline-block;
+    transform: rotate(-2deg);
+  }
+  .dl:hover{ background: var(--ink); }
+
+  .rel-meta{
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.78rem;
+    color: #6b736b;
+    transform: rotate(1.5deg);
   }
 
   /* ---------- footer ---------- */
@@ -623,6 +704,16 @@ c19 12 35 28 35 36 0 8 7 14 15 14 10 0 15 -10 15 -32 1 -37 20 -116 35 -138
     <span class="r1">C</span><span class="r2">a</span><span class="r3">n</span><span class="r4">T</span><span class="r5">o</span>
   </div>
   <p class="hero-sub">a small collection of barely functioning noise makers that i love. built in JUCE, released for free, use at your own risk.</p>
+</section>
+
+<section class="release">
+  <div class="rel-eyebrow label">Out now</div>
+  <h2 class="rel-name">Pursuivant<em>JFET Fuzz</em></h2>
+  <p class="rel-blurb">bites first, thinks later. sustains long after it should have quit.</p>
+  <div class="rel-foot">
+    <a class="dl" href="https://github.com/teemotheeey/teemotheeey.github.io/releases/tag/pursuivant-v0.1.0" target="_blank" rel="noopener">Download</a>
+    <span class="rel-meta">v0.1.0 &middot; vst3 &middot; windows &middot; it compiled, so.</span>
+  </div>
 </section>
 
 <footer class="label">
