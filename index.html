@@ -6,7 +6,7 @@
 <title>Canto Audio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500;1,600;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500;1,600;1,700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink: #131313;
@@ -128,7 +128,7 @@
 
   .release{
     position: relative;
-    max-width: 760px;
+    max-width: 1120px;
     margin: 1rem auto 5rem;
     padding: 0 2rem;
   }
@@ -164,10 +164,21 @@
     margin-top: 0.6em;
   }
 
+  .rel-cite{
+    display: block;
+    margin-top: 0.9rem;
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-style: normal;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7c847c;
+  }
+
   .rel-blurb{
-    max-width: 34ch;
-    margin: 2.2rem 0 0 auto;
-    text-align: right;
+    max-width: 30ch;
+    margin: 1.8rem 0 0 6%;
+    text-align: left;
     font-size: 1rem;
     color: #3a423a;
   }
@@ -177,8 +188,8 @@
     align-items: baseline;
     gap: 1.4rem;
     flex-wrap: wrap;
-    margin-top: 2.4rem;
-    margin-left: 8%;
+    justify-content: center;
+    margin-top: 3.4rem;
   }
 
   .dl{
@@ -216,6 +227,91 @@
 
   @media (max-width: 720px){
     .hero-mascot{ width: 56vw; }
+  }
+
+  /* --- Uncomment and point at your own file to use the real wordmark ---
+  @font-face{
+    font-family:"Respira Black";
+    src:url("/fonts/Respira-Black.woff2") format("woff2");
+    font-display:swap;
+  }
+  ------------------------------------------------------------------- */
+
+  .hau-stage{
+    /* palette — namespace Pal in PluginEditor.cpp */
+    --surround:#12100e;
+    --plate-top:#d6d2ca;
+    --plate-bot:#beb9b1;
+    --plate-dark:#b4b0a8;
+    --mark:#8a8680;
+    --enclosure:#1e1c18;
+    --label:#1c1a14;
+    --label-sub:#3a3830;
+    --knob-rim:#34322c;
+    --pointer:#f4f1ea;
+
+    display:flex;flex-direction:column;align-items:center;gap:14px;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  .hau-panel{
+    width:518px;max-width:100%;
+    filter:drop-shadow(0 18px 40px rgba(0,0,0,.5));
+  }
+  .hau-panel svg{display:block;width:100%;height:auto}
+
+  .hau-knob{cursor:grab;touch-action:none;outline:none}
+  .hau-knob:active{cursor:grabbing}
+  .hau-knob:focus-visible .hau-focus{
+    stroke:var(--pointer);stroke-width:1.4;stroke-dasharray:3 3;opacity:.9;
+  }
+  .hau-focus{fill:none;stroke:none;opacity:0}
+
+  .hau-hint{
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:#6d6963;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+
+  /* ---------- pursuivant panel placement ---------- */
+  .rel-top{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .rel-words{
+    flex: 1 1 340px;
+    min-width: 0;
+  }
+
+  .rel-panel{
+    --surround: transparent;       /* drop the dark enclosure frame */
+    flex: 0 1 500px;
+    max-width: 500px;
+    margin-top: 2.2rem;
+    transform: rotate(1.6deg);
+    transform-origin: 50% 0;
+    position: relative;
+    z-index: 1;
+    align-items: flex-start;
+  }
+  .rel-panel .hau-panel{
+    filter: drop-shadow(0 14px 26px rgba(0,0,0,0.28));
+  }
+  .hau-hint{
+    margin: 0.9rem 0 0 8%;
+    transform: rotate(-1.2deg);
+  }
+
+  @media (max-width: 900px){
+    .rel-top{ gap: 1rem; }
+    .rel-panel{
+      flex: 1 1 100%;
+      margin-top: 0.6rem;
+      transform: rotate(1.1deg);
+    }
+    .rel-blurb{ margin-left: 0; }
+    .hau-hint{ margin-left: 4%; }
   }
 </style>
 </head>
@@ -707,9 +803,19 @@ c19 12 35 28 35 36 0 8 7 14 15 14 10 0 15 -10 15 -32 1 -37 20 -116 35 -138
 </section>
 
 <section class="release">
-  <div class="rel-eyebrow label">Out now</div>
-  <h2 class="rel-name">Pursuivant<em>JFET Fuzz</em></h2>
-  <p class="rel-blurb">bites first, thinks later. sustains long after it should have quit.</p>
+  <div class="rel-top">
+    <div class="rel-words">
+      <div class="rel-eyebrow label">Out now</div>
+      <h2 class="rel-name">Pursuivant<em>JFET Fuzz</em></h2>
+      <p class="rel-blurb">&ldquo;a mover, a malcontent, and at times a stupid hell-raiser.&rdquo;
+        <cite class="rel-cite">Hunter S. Thompson, The Rum Diary</cite>
+      </p>
+    </div>
+    <div class="hau-stage rel-panel">
+      <div class="hau-panel" id="hauPanel"></div>
+      <p class="hau-hint">drag a knob to turn it</p>
+    </div>
+  </div>
   <div class="rel-foot">
     <a class="dl" href="https://github.com/teemotheeey/teemotheeey.github.io/releases/tag/pursuivant-v0.1.0" target="_blank" rel="noopener">Download</a>
     <span class="rel-meta">v0.1.0 &middot; vst3 &middot; windows &middot; it compiled, so.</span>
@@ -720,6 +826,357 @@ c19 12 35 28 35 36 0 8 7 14 15 14 10 0 15 -10 15 -32 1 -37 20 -116 35 -138
   <div>built with JUCE</div>
   <a href="https://github.com/teemotheeey" target="_blank" rel="noopener">github.com/teemotheeey</a>
 </footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---- geometry, transcribed from namespace Geo ---------------------- */
+  const W = 518, H = 301;
+  const PLATE_INSET = 8, PLATE_CORNER = 13, SCREW_INSET = 22;
+  const KNOB = 84, KNOB_CY = 120, TAPE_GAP = 16;
+  const COLS = [0.20, 0.50, 0.80];
+  const ROT_START = 216, ROT_SWEEP = 288;          // 1.2pi .. 2.8pi
+  const R = Math.min(KNOB, KNOB) * 0.42;           // 35.28
+
+  const NAMES  = ["fuzz", "tone", "out"];
+  const VALUES = [0.25, 0.25, 0.50];               // FUZZ / TONE / OUT defaults
+
+  /* ---- JUCE Colour::brighter / ::darker, exactly ---------------------- */
+  const hex2rgb = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16),
+                        parseInt(h.slice(5,7),16)];
+  const rgb2hex = c => "#" + c.map(v =>
+        Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,"0")).join("");
+  function brighter(hex, amt){
+    const a = 1/(1+amt);
+    return rgb2hex(hex2rgb(hex).map(v => 255 - a*(255-v)));
+  }
+  function darker(hex, amt){
+    const a = 1/(1+amt);
+    return rgb2hex(hex2rgb(hex).map(v => a*v));
+  }
+  const KNOB_BODY = "#16140f", PLATE_DARK = "#b4b0a8";
+
+  /* ---- FNV-1a, matching hashString() so the tapes lean identically ---- */
+  function fnv(str){
+    let h = 2166136261 >>> 0;
+    for (const ch of str){ h ^= ch.codePointAt(0); h = Math.imul(h, 16777619) >>> 0; }
+    return h >>> 0;
+  }
+
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (t, a={}) => {
+    const n = document.createElementNS(NS, t);
+    for (const k in a) n.setAttribute(k, a[k]);
+    return n;
+  };
+
+  /* ---- screw jitter: rolled once per page load, as per instance ------- */
+  const screws = Array.from({length:4}, () => ({
+    rot:   Math.random() * 90,          // Phillips head is 90-deg symmetric
+    dx:    (Math.random()*2 - 1) * 0.9,
+    dy:    (Math.random()*2 - 1) * 0.9,
+    depth: Math.random()
+  }));
+
+  /* ==================================================================== */
+  const svg = el("svg", {
+    viewBox:`0 0 ${W} ${H}`, width:W, height:H,
+    xmlns:NS, role:"img",
+    "aria-label":"Pursuivant plug-in interface, three knobs: fuzz, tone, out"
+  });
+  const defs = el("defs");
+  svg.appendChild(defs);
+
+  /* plate gradient */
+  const pg = el("linearGradient",{id:"hauPlate",x1:"0",y1:"0",x2:"0",y2:"1"});
+  pg.append(el("stop",{offset:"0","stop-color":"var(--plate-top)"}),
+            el("stop",{offset:"1","stop-color":"var(--plate-bot)"}));
+  defs.appendChild(pg);
+
+  /* knob body gradient — brighter(0.10) top to darker(0.12) bottom */
+  const kg = el("linearGradient",{id:"hauKnob",x1:"0",y1:"0",x2:"0",y2:"1"});
+  kg.append(el("stop",{offset:"0","stop-color":brighter(KNOB_BODY,0.10)}),
+            el("stop",{offset:"1","stop-color":darker(KNOB_BODY,0.12)}));
+  defs.appendChild(kg);
+
+  /* tape gradient + gloss */
+  const tg = el("linearGradient",{id:"hauTape",x1:"0",y1:"0",x2:"0",y2:"1"});
+  tg.append(el("stop",{offset:"0","stop-color":"#232019"}),
+            el("stop",{offset:"1","stop-color":"#151310"}));
+  defs.appendChild(tg);
+
+  /* shadows — JUCE DropShadow radius r maps to stdDeviation ~ r/3 */
+  function shadow(id, dy, std, op){
+    const f = el("filter",{id, x:"-60%", y:"-60%", width:"220%", height:"220%"});
+    f.appendChild(el("feDropShadow",{
+      dx:"0", dy:String(dy), stdDeviation:String(std),
+      "flood-color":"#000", "flood-opacity":String(op)}));
+    defs.appendChild(f);
+  }
+  shadow("hauPlateShadow", 6, 6.0, 0.40);   // radius 18, offset 4, path +2
+  shadow("hauKnobShadow",  6, 3.7, 0.30);   // radius 11, offset 4, circle +2
+  shadow("hauTapeShadow",  2, 1.7, 0.30);   // radius 5,  offset 2
+  screws.forEach((s,i) =>
+    shadow("hauScrew"+i, 2, 2.0, 0.18 + 0.14*s.depth));
+
+  /* ---- surround + plate ---------------------------------------------- */
+  svg.appendChild(el("rect",{x:0,y:0,width:W,height:H,fill:"var(--surround)"}));
+
+  const px = PLATE_INSET, py = PLATE_INSET;
+  const pw = W - PLATE_INSET*2, ph = H - PLATE_INSET*2;
+  svg.appendChild(el("rect",{x:px,y:py,width:pw,height:ph,rx:PLATE_CORNER,
+    fill:"url(#hauPlate)", filter:"url(#hauPlateShadow)"}));
+  svg.appendChild(el("rect",{x:px+0.7,y:py+0.7,width:pw-1.4,height:ph-1.4,
+    rx:PLATE_CORNER-0.7, fill:"none", stroke:"#ffffff","stroke-opacity":0.22,
+    "stroke-width":1.0}));
+  svg.appendChild(el("rect",{x:px,y:py,width:pw,height:ph,rx:PLATE_CORNER,
+    fill:"none", stroke:"var(--enclosure)","stroke-opacity":0.35,"stroke-width":1.1}));
+
+  /* ---- corner screws -------------------------------------------------- */
+  const SX = [px+SCREW_INSET, px+pw-SCREW_INSET, px+SCREW_INSET, px+pw-SCREW_INSET];
+  const SY = [py+SCREW_INSET, py+SCREW_INSET, py+ph-SCREW_INSET, py+ph-SCREW_INSET];
+  screws.forEach((s,i) => {
+    const cx = SX[i] + s.dx, cy = SY[i] + s.dy, r = 5;
+    const g = el("g");
+    g.appendChild(el("circle",{cx,cy,r, fill:brighter(PLATE_DARK, 0.16 - 0.08*s.depth),
+      filter:`url(#hauScrew${i})`}));
+
+    const sg = el("radialGradient",{id:"hauScrewG"+i, gradientUnits:"userSpaceOnUse",
+      cx:cx-2, cy:cy-2, r:9.9});
+    sg.append(el("stop",{offset:"0","stop-color":brighter(PLATE_DARK,0.16-0.08*s.depth)}),
+              el("stop",{offset:"1","stop-color":darker(PLATE_DARK,0.06+0.09*s.depth)}));
+    defs.appendChild(sg);
+
+    g.appendChild(el("circle",{cx,cy,r,fill:`url(#hauScrewG${i})`}));
+    g.appendChild(el("circle",{cx,cy,r,fill:"none",stroke:"var(--mark)",
+      "stroke-opacity":0.65,"stroke-width":0.7}));
+
+    const cross = el("path",{
+      d:"M -2.6,0 L 2.6,0 M 0,-2.6 L 0,2.6",
+      stroke:"var(--label)","stroke-opacity":0.36 + 0.12*s.depth,
+      "stroke-width":1.0,"stroke-linecap":"round",fill:"none",
+      transform:`translate(${cx} ${cy}) rotate(${s.rot})`});
+    g.appendChild(cross);
+    svg.appendChild(g);
+  });
+
+  /* ---- knobs ---------------------------------------------------------- */
+  const knobEls = [];
+  COLS.forEach((frac, i) => {
+    const cx = W * frac, cy = KNOB_CY;
+
+    /* static: cast shadow */
+    svg.appendChild(el("circle",{cx, cy:cy+2, r:R, fill:"#000",
+      "fill-opacity":0.001, filter:"url(#hauKnobShadow)"}));
+
+    /* static: 11-mark tick ring, big at 0 / 5 / 10 */
+    for (let t = 0; t < 11; t++){
+      const a   = (ROT_START + (t/10)*ROT_SWEEP) * Math.PI/180;
+      const big = t % 5 === 0;
+      const d0 = R + 5, d1 = d0 + (big ? 6 : 3);
+      const s = Math.sin(a), c = Math.cos(a);
+      svg.appendChild(el("line",{
+        x1:cx+d0*s, y1:cy-d0*c, x2:cx+d1*s, y2:cy-d1*c,
+        stroke:"var(--mark)", "stroke-opacity":big?0.70:0.40,
+        "stroke-width":big?1.6:1.1, "stroke-linecap":"round"}));
+    }
+
+    /* sheen — radial, origin up-left, radius = |p2-p1| = 1.416R */
+    const sh = el("radialGradient",{id:"hauSheen"+i, gradientUnits:"userSpaceOnUse",
+      cx:cx-0.35*R, cy:cy-0.45*R, r:1.416*R});
+    sh.append(el("stop",{offset:"0","stop-color":"#fff","stop-opacity":0.07}),
+              el("stop",{offset:"1","stop-color":"#fff","stop-opacity":0}));
+    defs.appendChild(sh);
+
+    /* interactive group */
+    const g = el("g",{class:"hau-knob", tabindex:"0", role:"slider",
+      "aria-label":NAMES[i], "aria-valuemin":"0","aria-valuemax":"100",
+      "aria-valuenow":String(Math.round(VALUES[i]*100))});
+    g.appendChild(el("circle",{class:"hau-focus",cx,cy,r:R+9}));
+    g.appendChild(el("circle",{cx,cy,r:R,fill:"url(#hauKnob)"}));
+    g.appendChild(el("circle",{cx,cy,r:R,fill:`url(#hauSheen${i})`}));
+    g.appendChild(el("circle",{cx,cy,r:R,fill:"none",stroke:"var(--knob-rim)",
+      "stroke-opacity":0.85,"stroke-width":1.1}));
+
+    /* pointer pill — rotates */
+    const pwid = Math.max(2, R*0.075), outer = R*0.82, len = R*0.78;
+    const rot = el("g");
+    rot.appendChild(el("rect",{x:cx-pwid/2+0.6, y:cy-outer+0.9, width:pwid,
+      height:len, rx:pwid/2, fill:"#000","fill-opacity":0.18}));
+    rot.appendChild(el("rect",{x:cx-pwid/2, y:cy-outer, width:pwid,
+      height:len, rx:pwid/2, fill:"var(--pointer)"}));
+    g.appendChild(rot);
+    svg.appendChild(g);
+
+    knobEls.push({g, rot, cx, cy, value:VALUES[i], name:NAMES[i]});
+  });
+
+  function applyRotation(k){
+    const a = ROT_START + k.value * ROT_SWEEP;
+    k.rot.setAttribute("transform", `rotate(${a.toFixed(2)} ${k.cx} ${k.cy})`);
+    k.g.setAttribute("aria-valuenow", String(Math.round(k.value*100)));
+  }
+  knobEls.forEach(applyRotation);
+
+  /* ---- Dymo tapes ------------------------------------------------------ */
+  /* Text is measured after mount so the tape is textWidth + 18 wide, as in
+     drawDymoTape(). Rotation and offset come from the same FNV hash the
+     plugin uses, so each label leans its own stable way.                   */
+  const tapeJobs = [];
+  COLS.forEach((frac, i) => {
+    const cx = W*frac, cy = (KNOB_CY - KNOB/2) - TAPE_GAP;
+    const h  = fnv(NAMES[i]);
+    const rotDeg = (((h & 0xFF)/255)*2 - 1) * 1.7;
+    const offX   = ((((h >>> 8) & 0xFF)/255)*2 - 1) * 3.0;
+
+    const g = el("g",{transform:
+      `rotate(${rotDeg.toFixed(3)} ${cx} ${cy}) translate(${offX.toFixed(3)} 0)`});
+    const text = el("text",{x:cx, y:cy, "text-anchor":"middle",
+      "dominant-baseline":"central", "font-family":"'Helvetica Neue',Helvetica,Arial,sans-serif",
+      "font-size":"15","font-weight":"700","letter-spacing":"1.2",
+      fill:"var(--pointer)"});
+    text.textContent = NAMES[i];
+    svg.appendChild(g);
+    tapeJobs.push({g, text, cx, cy});
+  });
+
+  /* ---- engraved plate lettering --------------------------------------- */
+  function engrave(x, y, str, size, family, weight, ink, alpha, anchor, ls){
+    const mk = (dy, fill, op) => {
+      const t = el("text",{x, y:y+dy, "text-anchor":anchor,
+        "font-family":family, "font-size":String(size), "font-weight":weight,
+        fill, "fill-opacity":String(op)});
+      if (ls) t.setAttribute("letter-spacing", ls);
+      t.textContent = str;
+      return t;
+    };
+    svg.appendChild(mk(0.9, "#ffffff", 0.28));   // catch-light below
+    svg.appendChild(mk(0,   ink,       alpha));  // ink on top
+  }
+  const brandRight = px + pw - 20;
+  engrave(brandRight, 170 + 74*0.5 + 74*0.34, "Canto", 74,
+          "'Respira Black','UnifrakturMaguntia',serif", "400",
+          "var(--label)", 0.78, "end", null);
+  engrave(brandRight, 248 + 13*0.5 + 3.4,
+          "harmonic attrition unit  //  quad-si / ge-diode hybrid", 9.5,
+          "'Helvetica Neue',Helvetica,Arial,sans-serif", "700",
+          "var(--label-sub)", 0.85, "end", "0.2");
+
+  document.getElementById("hauPanel").appendChild(svg);
+
+  /* Tapes: the label text has to be IN the document before it can be measured
+     — getComputedTextLength() on an unmounted <text> returns 0, which would
+     size every tape to a bare 18 px of padding. So mount the text first, then
+     insert the backing rects behind it, then size them.
+     Stacking order inside the group stays rect / gloss / emboss / text. */
+  const TAPE_H = 20, TAPE_PAD = 18;   // drawDymoTape(): width = textWidth + 18
+
+  tapeJobs.forEach(j => {
+    j.g.appendChild(j.text);                       // mount so layout exists
+
+    const rect = el("rect",{x:j.cx, y:j.cy-TAPE_H/2, width:0, height:TAPE_H,
+      rx:2, fill:"url(#hauTape)", filter:"url(#hauTapeShadow)"});
+    const gloss = el("rect",{x:j.cx, y:j.cy-TAPE_H/2, width:0,
+      height:TAPE_H*0.34, rx:2, fill:"#ffffff","fill-opacity":0.06});
+    const emboss = j.text.cloneNode(true);
+    emboss.setAttribute("y", j.cy + 1);
+    emboss.setAttribute("fill", "#000");
+    emboss.setAttribute("fill-opacity", "0.45");
+
+    j.g.insertBefore(rect,   j.text);
+    j.g.insertBefore(gloss,  j.text);
+    j.g.insertBefore(emboss, j.text);
+    j.rect = rect; j.gloss = gloss;
+  });
+
+  /* Measure the INK, not the advance.
+     getComputedTextLength() returns the advance width — where the text cursor
+     ends up — which is not where the glyphs actually are. Two things go wrong
+     with it here: letter-spacing appends a trailing gap after the final glyph,
+     so text-anchor:middle centres on a box wider than the ink and pushes the
+     word off-centre inside its tape; and bold faces routinely let glyphs
+     overhang their own advance. Either one lets the word escape the tape.
+     getBBox() reports the real inked rectangle, so padding that and seating
+     the tape around it gives even coverage on both ends. */
+  function sizeTapes(){
+    tapeJobs.forEach(j => {
+      let x0 = null, w = 0;
+      try {
+        const bb = j.text.getBBox();
+        if (bb && bb.width > 0){ x0 = bb.x; w = bb.width; }
+      } catch (_) {}
+
+      if (x0 === null){                       // detached, or measured pre-layout
+        try { w = j.text.getComputedTextLength(); } catch (_) {}
+        if (!w) w = j.text.textContent.length * 9.6;
+        x0 = j.cx - w / 2;
+      }
+
+      const tw = w + TAPE_PAD;
+      const tx = x0 - TAPE_PAD / 2;           // centre the tape on the ink
+      for (const r of [j.rect, j.gloss]){
+        r.setAttribute("x", tx.toFixed(2));
+        r.setAttribute("width", tw.toFixed(2));
+      }
+    });
+  }
+  sizeTapes();
+
+  /* Re-measure once webfonts settle — if the page swaps in a different face
+     after first paint the advance widths change and the tapes would be
+     mis-sized against the final text. */
+  if (document.fonts && document.fonts.ready)
+    document.fonts.ready.then(sizeTapes).catch(() => {});
+
+  /* ---- interaction: vertical drag, matching RotaryVerticalDrag --------- */
+  const SENSITIVITY = 200;   // px for full sweep
+  knobEls.forEach(k => {
+    let dragging = false, startY = 0, startVal = 0;
+
+    k.g.addEventListener("pointerdown", e => {
+      dragging = true; startY = e.clientY; startVal = k.value;
+      k.g.setPointerCapture(e.pointerId); e.preventDefault();
+    });
+    k.g.addEventListener("pointermove", e => {
+      if (!dragging) return;
+      const scale = (svg.getBoundingClientRect().width || W) / W;
+      k.value = Math.max(0, Math.min(1,
+        startVal + (startY - e.clientY) / (SENSITIVITY * scale)));
+      applyRotation(k);
+    });
+    const end = e => {
+      if (!dragging) return;
+      dragging = false;
+      try { k.g.releasePointerCapture(e.pointerId); } catch(_){}
+    };
+    k.g.addEventListener("pointerup", end);
+    k.g.addEventListener("pointercancel", end);
+
+    /* mouse wheel — JUCE sliders respond to scroll by default, so the
+       replica should too. Same direction: wheel up increases. */
+    k.g.addEventListener("wheel", e => {
+      e.preventDefault();
+      k.value = Math.max(0, Math.min(1,
+        k.value + (e.deltaY < 0 ? 1 : -1) * 0.03));
+      applyRotation(k);
+    }, { passive:false });
+
+    k.g.addEventListener("keydown", e => {
+      const step = e.shiftKey ? 0.01 : 0.05;
+      let v = k.value;
+      if (e.key === "ArrowUp"   || e.key === "ArrowRight") v += step;
+      else if (e.key === "ArrowDown" || e.key === "ArrowLeft") v -= step;
+      else if (e.key === "Home") v = 0;
+      else if (e.key === "End")  v = 1;
+      else return;
+      e.preventDefault();
+      k.value = Math.max(0, Math.min(1, v));
+      applyRotation(k);
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
