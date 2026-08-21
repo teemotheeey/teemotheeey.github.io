@@ -20,12 +20,15 @@
   *{ box-sizing: border-box; margin: 0; padding: 0; }
   html{ scroll-behavior: smooth; }
 
+  html{ overflow-x: hidden; }
   body{
     background: var(--paper);
     color: var(--ink);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     line-height: 1.45;
+    overflow-x: hidden;        /* rotated elements (letters, tags, both panels)
+                                   can paint past their box edge without this */
   }
 
   a{ color: inherit; }
@@ -230,6 +233,7 @@
     gap: 1rem;
   }
   footer a{ text-decoration: underline; }
+  .footer-links{ display: flex; gap: 1.3rem; flex-wrap: wrap; }
 
   @media (max-width: 720px){
     .hero-mascot{ width: 56vw; }
@@ -313,6 +317,7 @@
     .rel-top{ gap: 1rem; }
     .rel-panel{
       flex: 1 1 100%;
+      max-width: calc(100% - 16px);
       margin-top: 0.6rem;
       transform: rotate(1.1deg);
     }
@@ -1018,7 +1023,10 @@ c19 12 35 28 35 36 0 8 7 14 15 14 10 0 15 -10 15 -32 1 -37 20 -116 35 -138
 
 <footer class="label">
   <div>built with JUCE</div>
-  <a href="https://github.com/teemotheeey" target="_blank" rel="noopener">github.com/teemotheeey</a>
+  <div class="footer-links">
+    <a href="https://github.com/teemotheeey" target="_blank" rel="noopener">github.com/teemotheeey</a>
+    <a href="https://instagram.com/kraits_den" target="_blank" rel="noopener">@kraits_den</a>
+  </div>
 </footer>
 
 <script>
