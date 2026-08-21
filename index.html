@@ -6,7 +6,7 @@
 <title>Canto Audio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500;1,600;1,700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500;1,600;1,700&family=UnifrakturMaguntia&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink: #131313;
@@ -46,7 +46,7 @@
     padding: 1rem 1.5rem;
     border-bottom: 2px solid var(--ink);
   }
-  header .tag{ max-width: 26ch; }
+  header .tag{ max-width: 60ch; }
   nav{ display: flex; gap: 1.3rem; }
   nav a{ text-decoration: none; }
   nav a:hover{ text-decoration: underline; }
@@ -179,7 +179,9 @@
     max-width: 30ch;
     margin: 1.8rem 0 0 6%;
     text-align: left;
-    font-size: 1rem;
+    font-family: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.55;
     color: #3a423a;
   }
 
@@ -212,6 +214,7 @@
     color: #6b736b;
     transform: rotate(1.5deg);
   }
+
 
   /* ---------- footer ---------- */
 
@@ -257,7 +260,7 @@
     width:518px;max-width:100%;
     filter:drop-shadow(0 18px 40px rgba(0,0,0,.5));
   }
-  .hau-panel svg{display:block;width:100%;height:auto}
+  .hau-panel svg{display:block;width:100%;height:auto;overflow:visible}
 
   .hau-knob{cursor:grab;touch-action:none;outline:none}
   .hau-knob:active{cursor:grabbing}
@@ -313,6 +316,174 @@
     .rel-blurb{ margin-left: 0; }
     .hau-hint{ margin-left: 4%; }
   }
+
+/* ============================================================================
+   Chapelmaster — interactive panel, 1:1 with the plugin (518 × 636)
+
+   Drop-in: everything is scoped under .cm-panel, so it will not touch the rest
+   of a page. To scale on the site, wrap it and transform:
+
+     <div style="transform:scale(1.2);transform-origin:top left">…</div>
+
+   Fonts: UnifrakturMaguntia stands in for Respira Black, and Helvetica Neue
+   falls back to the system stack. Swap in the real faces with @font-face and
+   change --cm-brand-font / --cm-label-font below.
+   ========================================================================== */
+:root{
+  --cm-surround:#12100e; --cm-plate-top:#d8d4cc; --cm-plate-bot:#c4bfb7;
+  --cm-plate-dark:#b4b0a8; --cm-mark:#8a8680; --cm-enclosure:#1e1c18;
+  --cm-ink:#1c1a14; --cm-ink-sub:#3a3830;
+  --cm-knob-top:#262420; --cm-knob-bot:#121009; --cm-knob-rim:#34322c;
+  --cm-pointer:#f4f1ea; --cm-cap:#e9e5da; --cm-lilac:#B8A8E8;
+  --cm-tape-top:#232019; --cm-tape-bot:#151310;
+  --cm-brand-font:'UnifrakturMaguntia',serif;
+  --cm-label-font:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --cm-mono-font:'JetBrains Mono',ui-monospace,monospace;
+}
+
+.cm-panel,.cm-panel *{margin:0;padding:0;box-sizing:border-box}
+.cm-panel{position:relative;width:518px;height:636px;background:var(--cm-surround);
+  user-select:none;-webkit-user-select:none;touch-action:none;
+  font-family:var(--cm-label-font)}
+
+.cm-plate{position:absolute;inset:8px;border-radius:13px;
+  background:linear-gradient(var(--cm-plate-top),var(--cm-plate-bot));
+  box-shadow:0 4px 18px rgba(0,0,0,.40),0 2px 6px rgba(0,0,0,.22),
+    inset 0 1px 0 rgba(255,255,255,.22),0 0 0 1px rgba(30,28,24,.35)}
+
+.cm-screw{position:absolute;width:10px;height:10px;border-radius:50%;
+  box-shadow:0 2px 6px rgba(0,0,0,.25),0 0 0 .7px rgba(138,134,128,.65)}
+.cm-screw i{position:absolute;inset:0;border-radius:50%}
+.cm-screw i::before,.cm-screw i::after{content:"";position:absolute;
+  background:rgba(28,26,20,.42);border-radius:1px}
+.cm-screw i::before{left:2.2px;right:2.2px;top:4.5px;height:1px}
+.cm-screw i::after{top:2.2px;bottom:2.2px;left:4.5px;width:1px}
+
+/* ── preset strip ─────────────────────────────────────────── */
+.cm-preset{position:absolute;font-family:var(--cm-mono-font);color:var(--cm-ink);
+  text-shadow:0 .9px 0 rgba(255,255,255,.30);font-size:12.4px;letter-spacing:.09em;
+  display:flex;align-items:center;justify-content:center;pointer-events:none}
+.cm-arw{position:absolute;width:28px;height:26px;display:flex;align-items:center;
+  justify-content:center;cursor:pointer;font-family:var(--cm-mono-font);font-size:14px;
+  color:var(--cm-ink-sub);text-shadow:0 .9px 0 rgba(255,255,255,.30);opacity:.8}
+.cm-arw:hover{opacity:1}
+.cm-rule{position:absolute;height:1px;background:rgba(138,134,128,.45);
+  box-shadow:0 1px 0 rgba(255,255,255,.30)}
+
+/* ── knobs ────────────────────────────────────────────────── */
+.cm-knob{position:absolute;cursor:ns-resize}
+.cm-ticks{position:absolute;pointer-events:none}
+.cm-rot{position:absolute;inset:0;border-radius:50%}
+.cm-shadow{position:absolute;inset:0;border-radius:50%;
+  box-shadow:0 4px 11px rgba(0,0,0,.30),0 2px 4px rgba(0,0,0,.18)}
+.cm-body{position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.07),rgba(255,255,255,0) 62%),
+    linear-gradient(var(--cm-knob-top),var(--cm-knob-bot));
+  box-shadow:0 0 0 1.2px rgba(52,50,44,.85)}
+.cm-line{position:absolute;left:50%;border-radius:2px;background:var(--cm-pointer);
+  box-shadow:.6px .9px 2px rgba(0,0,0,.18)}
+.cm-cap{position:absolute;border-radius:50%;background:var(--cm-cap);
+  box-shadow:0 0 0 1px rgba(0,0,0,.45);overflow:hidden}
+.cm-notch{position:absolute;left:50%;top:0;background:var(--cm-knob-bot);
+  border-radius:0 0 2px 2px}
+.cm-tape{position:absolute;left:50%;display:flex;align-items:center;border-radius:2px;
+  white-space:nowrap;background:linear-gradient(var(--cm-tape-top),var(--cm-tape-bot));
+  box-shadow:0 2px 5px rgba(0,0,0,.30);pointer-events:none}
+.cm-tape span{font-weight:700;letter-spacing:.08em;color:var(--cm-pointer);
+  text-shadow:0 1px 0 rgba(0,0,0,.45)}
+
+/* ── window ───────────────────────────────────────────────── */
+.cm-glass{position:absolute;border-radius:3px;
+  background:linear-gradient(#15130f,#0d0c09);
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.8),0 1px 0 rgba(255,255,255,.28),
+    0 0 0 1.2px rgba(0,0,0,.55)}
+.cm-glass::after{content:"";position:absolute;left:2px;right:2px;top:2px;height:34%;
+  border-radius:2px;background:linear-gradient(rgba(255,255,255,.055),rgba(255,255,255,0));
+  pointer-events:none}
+.cm-panel canvas{position:absolute}
+
+/* ── engraved marks ───────────────────────────────────────── */
+.cm-eng{position:absolute;white-space:nowrap;color:var(--cm-ink);
+  text-shadow:0 .9px 0 rgba(255,255,255,.28);pointer-events:none}
+.cm-brand{font-family:var(--cm-brand-font);line-height:1;opacity:.78;font-size:88px}
+.cm-spec{font-size:9.5px;color:var(--cm-ink-sub);opacity:.85}
+
+  /* ---------- chapelmaster placement ---------- */
+  /* caption arrangement: panel centred, wordmark overlapping its lower edge,
+     blurb and note captioned beneath                                     */
+
+  .cm-stack{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cm-stage{
+    /* the panel is fixed-size DOM (518x636), not an SVG — it has to be scaled
+       with a transform, and the layout footprint reclaimed with margins       */
+    width: 518px;
+    transform: scale(0.828) rotate(1.1deg);
+    transform-origin: 50% 50%;
+    margin: -55px -45px;
+    position: relative;
+    z-index: 1;
+  }
+  /* drop the dark enclosure frame — set on the panel itself, not inherited */
+  .cm-stage .cm-panel{
+    background: transparent;
+    filter: drop-shadow(0 16px 30px rgba(0,0,0,0.30));
+  }
+
+  .cm-head{
+    text-align: center;
+    margin-top: -1.4rem;       /* overlap the panel's lower edge */
+    position: relative;
+    z-index: 2;
+    pointer-events: none;       /* keep the knobs underneath draggable */
+  }
+  .cm-eyebrow{
+    transform: rotate(-4deg);
+    margin-left: 0;
+  }
+  .cm-name{
+    transform: rotate(1.2deg);
+    font-size: clamp(2.6rem, 9.5vw, 6rem);
+  }
+  .cm-name em{ transform: rotate(-2.4deg); }
+
+  .cm-blurb{
+    margin: 1.8rem auto 0;
+    text-align: center;
+    max-width: 36ch;
+  }
+  .cm-meta{
+    display: block;
+    margin-top: 1.6rem;
+    text-align: center;
+    transform: rotate(0.8deg);
+  }
+
+  .cm-hint{
+    line-height: 1;
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: #6d6963;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-align: center;
+    margin: 1.1rem 0 0;
+    transform: rotate(-0.6deg);
+  }
+
+  @media (max-width: 900px){
+    .cm-stage{
+      transform: scale(0.65) rotate(1.1deg);
+      margin: -111px -91px;
+    }
+    .cm-head{ margin-top: -1rem; }
+    .cm-blurb{ max-width: none; }
+  }
+
 </style>
 </head>
 <body>
@@ -788,7 +959,7 @@ c19 12 35 28 35 36 0 8 7 14 15 14 10 0 15 -10 15 -32 1 -37 20 -116 35 -138
 </svg>
 
 <header>
-  <div class="tag label">Plugin Hub &rarr; Free Downloads, No Warranty</div>
+  <div class="tag label">unfaithful emulations &amp;<br>frankensteined low-hum machines</div>
   <nav class="label">
     <a href="https://github.com/teemotheeey" target="_blank" rel="noopener">GitHub</a>
   </nav>
@@ -799,7 +970,27 @@ c19 12 35 28 35 36 0 8 7 14 15 14 10 0 15 -10 15 -32 1 -37 20 -116 35 -138
   <div class="ransom">
     <span class="r1">C</span><span class="r2">a</span><span class="r3">n</span><span class="r4">T</span><span class="r5">o</span>
   </div>
-  <p class="hero-sub">a small collection of barely functioning noise makers that i love. built in JUCE, released for free, use at your own risk.</p>
+  <p class="hero-sub">a small collection of barely functioning noise makers that i care a bit too much for.</p>
+</section>
+
+<section class="release cm-release">
+  <div class="cm-stack">
+    <div class="cm-stage">
+      <div class="cm-panel" id="cm"></div>
+    </div>
+    <div class="cm-head">
+      <div class="rel-eyebrow label cm-eyebrow">Out now</div>
+      <h2 class="rel-name cm-name">Chapelmaster<em>Shimmer Feedbacker</em></h2>
+    </div>
+    <p class="cm-hint">load before the amp sim</p>
+    <p class="rel-blurb cm-blurb">&ldquo;Stray sheep. Stray sheep.&rdquo;
+      <cite class="rel-cite">Natsume S&#333;seki, Sanshir&#333;</cite>
+    </p>
+    <div class="rel-foot cm-foot">
+      <a class="dl" href="https://github.com/teemotheeey/teemotheeey.github.io/releases/tag/chapelmaster-v0.1.0" target="_blank" rel="noopener">Download</a>
+      <span class="rel-meta cm-meta">v0.1.0 &middot; vst3 &middot; windows</span>
+    </div>
+  </div>
 </section>
 
 <section class="release">
@@ -818,7 +1009,7 @@ c19 12 35 28 35 36 0 8 7 14 15 14 10 0 15 -10 15 -32 1 -37 20 -116 35 -138
   </div>
   <div class="rel-foot">
     <a class="dl" href="https://github.com/teemotheeey/teemotheeey.github.io/releases/tag/pursuivant-v0.1.0" target="_blank" rel="noopener">Download</a>
-    <span class="rel-meta">v0.1.0 &middot; vst3 &middot; windows &middot; it compiled, so.</span>
+    <span class="rel-meta">v0.1.0 &middot; vst3 &middot; windows</span>
   </div>
 </section>
 
@@ -1175,6 +1366,228 @@ c19 12 35 28 35 36 0 8 7 14 15 14 10 0 15 -10 15 -32 1 -37 20 -116 35 -138
       applyRotation(k);
     });
   });
+})();
+</script>
+
+<script>
+(() => {
+'use strict';
+const W=518,H=636,MARG=40;
+const TOPC=112,BOTC=84,BOTP=118,SPAN=308;
+const TOPCY=174,BOTCY=330,GLASSY=400,GLASSH=66,BRANDY=476,SPECY=570;
+const PRESETCY=34,PRESETW=230,ARROWOFF=100,RULEY=56,RULEINSET=80;
+const START=-144,SWEEP=288;
+
+/* real parameter ranges, so preset values map exactly as the plugin does */
+const RANGE={hold:[0.1,8],bloom:[0.5,12],depth:[0.7,1.4],
+             wail:[0,1],haze:[0,1],tilt:[-1,1],mix:[0,1]};
+const norm=(p,v)=>(v-RANGE[p][0])/(RANGE[p][1]-RANGE[p][0]);
+
+const PRESETS=[
+ {n:"fair copy",  hold:4.0,bloom:6.0, depth:1.05,wail:.30,haze:.45,tilt: 0.00,mix:.35},
+ {n:"slow candle",hold:5.0,bloom:4.0, depth:0.82,wail:.10,haze:.55,tilt: 0.20,mix:.22},
+ {n:"long nave",  hold:1.5,bloom:9.0, depth:1.12,wail:.35,haze:.65,tilt:-0.15,mix:.75},
+ {n:"the drone",  hold:6.0,bloom:5.0, depth:1.00,wail:.15,haze:.25,tilt:-0.10,mix:.70},
+ {n:"high mass",  hold:2.0,bloom:10.0,depth:1.18,wail:.45,haze:.95,tilt:-0.45,mix:1.00},
+ {n:"te deum",    hold:1.0,bloom:2.5, depth:1.32,wail:.85,haze:.35,tilt: 0.35,mix:.60}
+];
+
+const KNOBS=[
+ {p:"hold", label:"hold", big:1, cx:W/2-SPAN/2, cy:TOPCY, tip:"sustain banked before loop gain starts rising"},
+ {p:"bloom",label:"bloom",big:1, cx:W/2,        cy:TOPCY, tip:"time from resting gain to depth once hold is met"},
+ {p:"depth",label:"depth",big:1, cx:W/2+SPAN/2, cy:TOPCY, tip:"highest loop gain · past unity it self-oscillates"},
+ {p:"wail", label:"wail", big:0, cx:MARG+BOTC/2,        cy:BOTCY, tip:"how far the loop's resonant peak sweeps up"},
+ {p:"haze", label:"haze", big:0, cx:MARG+BOTP+BOTC/2,   cy:BOTCY, tip:"grain size · detune spread · diffusion"},
+ {p:"tilt", label:"tilt", big:0, cx:MARG+2*BOTP+BOTC/2, cy:BOTCY, tip:"tone of the wet path"},
+ {p:"mix",  label:"mix",  big:0, cx:MARG+3*BOTP+BOTC/2, cy:BOTCY, tip:"dry against wet"}
+];
+
+/* seeded jitter — tapes and screws sit the same way every load */
+const lcg=(s,i)=>{const h=(Math.imul(s,1664525)+Math.imul(i,22695477)+1013904223)>>>0;
+  return (h&0x7fffffff)/0x7fffffff;};
+const seedOf=t=>{let s=0;for(const c of t)s=(Math.imul(s,31)+c.charCodeAt(0))|0;return s;};
+
+const cm=document.getElementById('cm');
+const el=(cls,css,html)=>{const d=document.createElement('div');
+  d.className=cls; if(css)d.style.cssText=css; if(html)d.innerHTML=html;
+  cm.appendChild(d); return d;};
+
+el('cm-plate');
+
+/* screws */
+[[30,30],[W-30,30],[30,H-30],[W-30,H-30]].forEach((p,i)=>{
+  const rot=lcg(7,i*4)*90, dx=(lcg(7,i*4+1)-.5)*1.8, dy=(lcg(7,i*4+2)-.5)*1.8,
+        dep=lcg(7,i*4+3);
+  el('cm-screw',`left:${p[0]-5+dx}px;top:${p[1]-5+dy}px;
+     background:radial-gradient(circle at 32% 32%,
+       rgba(196,192,184,${(1-dep*0.18).toFixed(3)}),#a49f96)`,
+     `<i style="transform:rotate(${rot.toFixed(1)}deg)"></i>`);
+});
+
+/* preset strip */
+const nameEl=el('cm-preset',
+  `left:${(W-PRESETW)/2}px;top:${PRESETCY-11}px;width:${PRESETW}px;height:22px`);
+const prev=el('cm-arw',`left:${W/2-ARROWOFF-14}px;top:${PRESETCY-13}px`,'&#8249;');
+const next=el('cm-arw',`left:${W/2+ARROWOFF-14}px;top:${PRESETCY-13}px`,'&#8250;');
+el('cm-rule',`left:${RULEINSET}px;top:${RULEY}px;width:${W-2*RULEINSET}px`);
+
+/* knobs */
+function ticksSVG(cell){
+  const R=cell*0.42,sc=cell/84,pad=Math.ceil(11*sc)+5,c=R+pad,vb=(R+pad)*2;
+  let b='',s='';
+  for(let t=0;t<=10;t++){
+    const a=(START+t/10*SWEEP)*Math.PI/180,si=Math.sin(a),co=Math.cos(a);
+    const B=(t===0||t===5||t===10),r1=R+5*sc,r2=R+(B?11:8)*sc;
+    const seg=`M${c+r1*si} ${c-r1*co} L${c+r2*si} ${c-r2*co} `;
+    if(B)b+=seg;else s+=seg;}
+  return `<svg class="cm-ticks" viewBox="0 0 ${vb} ${vb}" width="${vb}" height="${vb}"
+    style="left:${-pad}px;top:${-pad}px">
+    <path d="${b}" stroke="rgba(138,134,128,.70)" stroke-width="${1.6*sc}"
+      stroke-linecap="round" fill="none"/>
+    <path d="${s}" stroke="rgba(138,134,128,.40)" stroke-width="${1.1*sc}"
+      stroke-linecap="round" fill="none"/></svg>`;
+}
+
+KNOBS.forEach(k=>{
+  const cell=k.big?TOPC:BOTC, R=cell*0.42, sc=cell/84;
+  const tapeH=20*sc, gap=16*sc, fs=13.5*sc, pad=9*sc;
+  const sd=seedOf(k.label), rot=(lcg(sd,1)-.5)*3.44, off=(lcg(sd,2)-.5)*6*sc;
+  const inner = k.big
+    ? `<div class="cm-rot"><div class="cm-cap" style="inset:${R*0.30}px">
+         <div class="cm-notch" style="width:${R*0.105}px;margin-left:${-R*0.0525}px;
+           height:${R*0.35}px"></div></div></div>`
+    : `<div class="cm-rot"><div class="cm-line" style="width:${Math.max(2,R*0.075)}px;
+         height:${R*0.78}px;margin-left:${-Math.max(2,R*0.075)/2}px;
+         top:${R*0.22}px"></div></div>`;
+  const d=el('cm-knob',
+    `left:${k.cx-R}px;top:${k.cy-R}px;width:${R*2}px;height:${R*2}px`,
+    ticksSVG(cell)+`<div class="cm-shadow"></div><div class="cm-body"></div>`+inner+
+    `<div class="cm-tape" style="top:${-gap-tapeH/2}px;height:${tapeH}px;padding:0 ${pad}px;
+       transform:translateX(calc(-50% + ${off.toFixed(2)}px)) rotate(${rot.toFixed(2)}deg)">
+       <span style="font-size:${fs}px">${k.label}</span></div>`);
+  d.title=k.tip;
+  k.el=d; k.v=0.5;
+
+  d.addEventListener('pointerdown',e=>{
+    k._y=e.clientY; k._v0=k.v; d.setPointerCapture(e.pointerId); e.preventDefault();
+    d.querySelectorAll('.cm-rot').forEach(r=>r.style.transition='none');
+  });
+  d.addEventListener('pointermove',e=>{
+    if(k._y==null)return;
+    k.v=Math.max(0,Math.min(1,k._v0+(k._y-e.clientY)/200)); setAngle(k);
+  });
+  const end=()=>k._y=null;
+  d.addEventListener('pointerup',end); d.addEventListener('pointercancel',end);
+});
+function setAngle(k){
+  const deg=START+k.v*SWEEP;
+  k.el.querySelectorAll('.cm-rot').forEach(r=>r.style.transform=`rotate(${deg}deg)`);
+}
+
+/* window */
+el('cm-glass',`left:${MARG}px;top:${GLASSY}px;width:${W-2*MARG}px;height:${GLASSH}px`);
+const cv=document.createElement('canvas');
+cv.width=(W-2*MARG-4)*2; cv.height=(GLASSH-4)*2;
+cv.style.cssText=`left:${MARG+2}px;top:${GLASSY+2}px;
+  width:${W-2*MARG-4}px;height:${GLASSH-4}px`;
+cm.appendChild(cv);
+
+/* wordmark */
+el('cm-eng cm-brand',`left:0;width:${W}px;text-align:center;top:${BRANDY}px`,'Canto');
+el('cm-eng cm-spec',`left:0;width:${W}px;text-align:center;top:${SPECY}px`,
+   'shimmer feedbacker &nbsp;//&nbsp; dattorro plate / granular shifter');
+
+/* ── presets ──────────────────────────────────────────────── */
+let idx=0;
+function applyPreset(animate){
+  const p=PRESETS[idx];
+  nameEl.textContent=p.n;
+  KNOBS.forEach(k=>{
+    k.v=norm(k.p,p[k.p]);
+    k.el.querySelectorAll('.cm-rot').forEach(r=>{
+      r.style.transition=animate?'transform .4s cubic-bezier(.4,0,.2,1)':'none';});
+    setAngle(k);
+  });
+}
+prev.onclick=()=>{idx=(idx-1+PRESETS.length)%PRESETS.length;applyPreset(true);};
+next.onclick=()=>{idx=(idx+1)%PRESETS.length;applyPreset(true);};
+applyPreset(false);
+
+/* ── trace ────────────────────────────────────────────────────
+   A demonstration loop, not the plugin's DSP: it plays a phrase, holds it,
+   then releases, so the window is never static on the site. The envelope
+   follower and gain ramp use the plugin's own time constants.          */
+const HIST=340,DT=1/15,BASE=0.6,LO=0.40,HI=1.50;
+const gH=new Array(HIST).fill(BASE), eH=new Array(HIST).fill(0);
+let sus=0,gain=BASE,env=0,src=0,t=0;
+
+/* the loop only runs while the panel is on screen and the tab is visible —
+   it is decorative, so there is nothing to keep simulating in the background */
+let timer=null, onScreen=false;
+function running(){ return onScreen && !document.hidden; }
+function sync(){
+  if(running() && timer===null)      timer=setInterval(tick,1000/15);
+  else if(!running() && timer!==null){ clearInterval(timer); timer=null; }
+}
+
+if('IntersectionObserver' in window){
+  new IntersectionObserver(es=>{ onScreen=es[0].isIntersecting; sync(); },
+    {rootMargin:'120px'}).observe(cm);
+}else{
+  onScreen=true;                       // no observer: fall back to always-on
+}
+document.addEventListener('visibilitychange',sync);
+
+function tick(){
+  // a phrase: strums, a long hold, then silence — loops every ~26 s
+  t+=DT;
+  const cyc=t%26;
+  if(cyc<7)        src = (cyc%1.4<0.05) ? 0.34 : src*0.90;   // strumming
+  else if(cyc<15)  src = 0.30+0.02*Math.sin(t*5);            // held
+  else             src *= 0.88;                              // released
+
+  env += (src>env?0.55:0.10)*(src-env);
+  const p=PRESETS[idx];
+  const HOLD=p.hold, BLOOM=p.bloom, DEPTH=p.depth;
+  if(env>0.002) sus=Math.min(HOLD+BLOOM, sus+DT*Math.min(1,Math.max(.25,Math.sqrt(env*40))));
+  else          sus=Math.max(0, sus-DT*3);
+  const r=Math.max(0,Math.min(1,(sus-HOLD)/BLOOM));
+  gain += 0.18*((BASE+r*(DEPTH-BASE))-gain);
+  gH.push(gain); gH.shift(); eH.push(env); eH.shift();
+  draw(DEPTH);
+}
+
+draw(PRESETS[idx].depth);   // paint once so the window is never blank
+sync();
+
+function draw(depth){
+  const g=cv.getContext('2d'),w=cv.width,h=cv.height;
+  const y=v=>h-((v-LO)/(HI-LO))*h;
+  g.clearRect(0,0,w,h);
+
+  g.strokeStyle='rgba(184,168,232,.10)';g.lineWidth=1;
+  for(let i=1;i<8;i++){g.beginPath();g.moveTo(i*w/8,0);g.lineTo(i*w/8,h);g.stroke();}
+  g.fillStyle='rgba(184,168,232,.06)';g.fillRect(0,0,w,y(1));
+
+  const ref=(v,a,d)=>{g.save();g.setLineDash(d?[d,d*.6]:[]);
+    g.strokeStyle=`rgba(184,168,232,${a})`;g.lineWidth=2;
+    g.beginPath();g.moveTo(0,y(v));g.lineTo(w,y(v));g.stroke();g.restore();};
+  ref(BASE,.22,4); ref(depth,.32,6); ref(1,.55,0);
+
+  // input envelope, in its own band along the bottom
+  const floor=y(BASE), band=h-floor-6, ey=v=>h-Math.min(1,v/0.40)*band;
+  const path=(arr,fn)=>{g.beginPath();
+    arr.forEach((v,i)=>{const x=i/(HIST-1)*w; i?g.lineTo(x,fn(v)):g.moveTo(x,fn(v));});};
+  path(eH,ey); g.lineTo(w,h); g.lineTo(0,h); g.closePath();
+  g.fillStyle='rgba(184,168,232,.13)'; g.fill();
+  path(eH,ey); g.strokeStyle='rgba(184,168,232,.42)'; g.lineWidth=2; g.stroke();
+
+  // loop gain
+  path(gH,y); g.strokeStyle='rgba(184,168,232,.30)'; g.lineWidth=6;
+  g.lineJoin='round'; g.stroke();
+  path(gH,y); g.strokeStyle='#E4DBFF'; g.lineWidth=3.2; g.stroke();
+  g.fillStyle='#fff'; g.beginPath(); g.arc(w-4,y(gH[HIST-1]),4,0,7); g.fill();
+}
 })();
 </script>
 
